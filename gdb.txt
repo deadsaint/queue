@@ -1,0 +1,1645 @@
+.cuda-gdbinit:5: Error in sourced command file:
+Undefined command: "watchpoint".  Try "help".
+Set breakpoint at specified line or function.
+break [LOCATION] [thread THREADNUM] [if CONDITION]
+LOCATION may be a line number, function name, or "*" and an address.
+If a line number is specified, break at start of code for that line.
+If a function is specified, break at start of code for that function.
+If an address is specified, break at that exact address.
+With no LOCATION, uses current execution address of the selected
+stack frame.  This is useful for breaking on return to a stack frame.
+
+THREADNUM is the number from "info threads".
+CONDITION is a boolean expression.
+
+Multiple breakpoints at one place are permitted, and useful if their
+conditions are different.
+
+Do "help breakpoints" for info on other commands dealing with breakpoints.
+No breakpoints or watchpoints or autosteps.
+Undefined command: "wath".  Try "help".
+Undefined command: "watchpoint".  Try "help".
+Set a watchpoint for an expression.
+A watchpoint stops execution of your program whenever the value of
+an expression changes.
+.cuda-gdbinit:5: Error in sourced command file:
+No symbol "myqueue" in current context.
+No breakpoints or watchpoints or autosteps.
+Starting program: /home/zxy/workspace/queue/queue 10 10 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 3375)]
+[Context Create of context 0x626f00 on Device 0]
+[Launch of CUDA Kernel 0 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+
+Program received signal CUDA_EXCEPTION_4, Warp Illegal Instruction.
+[Switching focus to CUDA kernel 0, grid 1, block (0,0,0), thread (0,0,0), device 0, sm 1, warp 0, lane 0]
+0x000000000076bd24 in app_bfs<<<(10,1,1),(10,1,1)>>> (myqueue=0x400200200, 
+    d_dummy=0x400200000) at queue.cu:79
+79	__global__ void app_bfs(pqueue myqueue, pnode d_dummy){
+74		printf("[Info]Complete!\n");
+75		return 0;
+76	}
+77	
+78	
+79	__global__ void app_bfs(pqueue myqueue, pnode d_dummy){
+80		//printf("%d:%d\n", threadIdx.x, d_dummy->data);
+81		if((blockIdx.x == 0) && ( threadIdx.x == 0)){
+82			myqueue->head = d_dummy;
+83			myqueue->tail = d_dummy;
+84		}
+85		__syncthreads();
+86	
+87		//printf("[Info:start]block%d:thread:%d\n", blockIdx.x, threadIdx.x);
+88		pnode newnode = (pnode)malloc(sizeof(node));
+89		//enqueue(blockIdx.x * blockDim.x + threadIdx.x, myqueue);
+90	
+91		//if(threadIdx.x % 2 == 0){
+92		if(1){
+93			//printf("block:%d\tthread:%d\n", blockIdx.x, threadIdx.x);
+74		printf("[Info]Complete!\n");
+75		return 0;
+76	}
+77	
+78	
+79	__global__ void app_bfs(pqueue myqueue, pnode d_dummy){
+80		//printf("%d:%d\n", threadIdx.x, d_dummy->data);
+81		if((blockIdx.x == 0) && ( threadIdx.x == 0)){
+82			myqueue->head = d_dummy;
+83			myqueue->tail = d_dummy;
+Undefined command: "print_queue".  Try "help".
+Define a new command name.  Command name is argument.
+Definition appears on following lines, one command per line.
+End with a line of just "end".
+Use the "document" command to give documentation for the new command.
+Commands defined in this way may have up to ten arguments.
+Argument required (name of command to define).
+Undefined command: "print_queue".  Try "help".
+A debugging session is active.
+
+	Inferior 1 [process 3369] will be killed.
+
+Quit anyway? (y or n) [Termination of CUDA Kernel 0 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+Breakpoint 1 at 0x400db7: file queue.cu, line 149.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000400db7 in enqueue(int, pqueue) at queue.cu:149
+Starting program: /home/zxy/workspace/queue/queue 10 10 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 3454)]
+[Context Create of context 0x626f00 on Device 0]
+[Launch of CUDA Kernel 0 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+
+Program received signal CUDA_EXCEPTION_4, Warp Illegal Instruction.
+[Switching focus to CUDA kernel 0, grid 1, block (0,0,0), thread (0,0,0), device 0, sm 1, warp 0, lane 0]
+0x000000000076bd24 in app_bfs<<<(10,1,1),(10,1,1)>>> (myqueue=0x400200200, 
+    d_dummy=0x400200000) at queue.cu:79
+79	__global__ void app_bfs(pqueue myqueue, pnode d_dummy){
+74		printf("[Info]Complete!\n");
+75		return 0;
+76	}
+77	
+78	
+79	__global__ void app_bfs(pqueue myqueue, pnode d_dummy){
+80		//printf("%d:%d\n", threadIdx.x, d_dummy->data);
+81		if((blockIdx.x == 0) && ( threadIdx.x == 0)){
+82			myqueue->head = d_dummy;
+83			myqueue->tail = d_dummy;
+#0  0x000000000076bd24 in app_bfs<<<(10,1,1),(10,1,1)>>> (myqueue=0x400200200, 
+    d_dummy=0x400200000) at queue.cu:79
+Undefined info command: "warp".  Try "help info".
+Generic command for showing things about the program being debugged.
+
+List of info subcommands:
+
+info address -- Describe where symbol SYM is stored
+info all-registers -- List of all registers and their contents
+info args -- Argument variables of current stack frame
+info autosteps -- Status of autosteps
+info auxv -- Display the inferior's auxiliary vector
+info bookmarks -- Status of user-settable bookmarks
+info breakpoints -- Status of user-settable breakpoints
+info catch -- Exceptions that can be caught in the current stack frame
+info checkpoints -- IDs of currently known checkpoints
+info classes -- All Objective-C classes
+info common -- Print out the values contained in a Fortran COMMON block
+info copying -- Conditions for redistributing copies of GDB
+info cuda -- Print informations about the current CUDA activities
+info dcache -- Print information on the dcache performance
+info display -- Expressions to display when program stops
+info extensions -- All filename extensions associated with a source language
+info files -- Names of targets and files being debugged
+info float -- Print the status of the floating point unit
+info frame -- All about selected stack frame
+info functions -- All function names
+info handle -- What debugger does when program gets various signals
+info inferiors -- IDs of currently known inferiors
+info line -- Core addresses of the code for a source line
+info locals -- Local variables of current stack frame
+info macro -- Show the definition of MACRO
+info mem -- Memory region attributes
+info os -- Show OS data ARG
+info proc -- Show /proc process information about any running process
+info program -- Execution status of the program
+info record -- Info record options
+info registers -- List of integer registers and their contents
+info scope -- List the variables local to a scope
+info selectors -- All Objective-C selectors
+info set -- Show all GDB settings
+info sharedlibrary -- Status of loaded shared object libraries
+info signals -- What debugger does when program gets various signals
+info source -- Information about the current source file
+info sources -- Source files in the program
+info stack -- Backtrace of the stack
+info static-tracepoint-markers -- List target static tracepoints markers
+info symbol -- Describe what symbol is at location ADDR
+info target -- Names of targets and files being debugged
+info tasks -- Provide information about all known Ada tasks
+info terminal -- Print inferior's saved terminal status
+info threads -- IDs of currently known threads
+info tracepoints -- Status of tracepoints
+info tvariables -- Status of trace state variables and their values
+info types -- All type names
+info variables -- All global and static variable names
+info vector -- Print the status of the vector unit
+info warranty -- Various kinds of warranty you do not have
+info watchpoints -- Status of watchpoints
+info win -- List of all displayed windows
+
+Type "help info" followed by info subcommand name for full documentation.
+Type "apropos word" to search for commands related to "word".
+Command name abbreviations are allowed if unambiguous.
+Unrecognized option: 'warp'.
+  Wp Active Lanes Mask Divergent Lanes Mask Active Physical PC Kernel BlockIdx 
+Device 0 SM 1
+*  0        0x000003ff           0x00000000 0x0000000000000014      0  (0,0,0) 
+   1        0x00000000           0x00000000                n/a    n/a      n/a 
+   2        0x00000000           0x00000000                n/a    n/a      n/a 
+   3        0x00000000           0x00000000                n/a    n/a      n/a 
+   4        0x00000000           0x00000000                n/a    n/a      n/a 
+   5        0x00000000           0x00000000                n/a    n/a      n/a 
+   6        0x00000000           0x00000000                n/a    n/a      n/a 
+   7        0x00000000           0x00000000                n/a    n/a      n/a 
+   8        0x00000000           0x00000000                n/a    n/a      n/a 
+   9        0x00000000           0x00000000                n/a    n/a      n/a 
+  10        0x00000000           0x00000000                n/a    n/a      n/a 
+  11        0x00000000           0x00000000                n/a    n/a      n/a 
+  12        0x00000000           0x00000000                n/a    n/a      n/a 
+  13        0x00000000           0x00000000                n/a    n/a      n/a 
+  14        0x00000000           0x00000000                n/a    n/a      n/a 
+  15        0x00000000           0x00000000                n/a    n/a      n/a 
+  16        0x00000000           0x00000000                n/a    n/a      n/a 
+  17        0x00000000           0x00000000                n/a    n/a      n/a 
+  18        0x00000000           0x00000000                n/a    n/a      n/a 
+  19        0x00000000           0x00000000                n/a    n/a      n/a 
+  20        0x00000000           0x00000000                n/a    n/a      n/a 
+  21        0x00000000           0x00000000                n/a    n/a      n/a 
+  22        0x00000000           0x00000000                n/a    n/a      n/a 
+  23        0x00000000           0x00000000                n/a    n/a      n/a 
+  24        0x00000000           0x00000000                n/a    n/a      n/a 
+  25        0x00000000           0x00000000                n/a    n/a      n/a 
+  26        0x00000000           0x00000000                n/a    n/a      n/a 
+  27        0x00000000           0x00000000                n/a    n/a      n/a 
+Quit
+The program being debugged has been started already.
+Start it from the beginning? (y or n) Program not restarted.
+Continuing.
+[Termination of CUDA Kernel 0 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+
+Program terminated with signal CUDA_EXCEPTION_4, Warp Illegal Instruction.
+The program no longer exists.
+The program is not being run.
+The program is not being run.
+The program is not being run.
+The program is not being run.
+The program is not being run.
+The program is not being run.
+Breakpoint 1 at 0x400db7: file queue.cu, line 156.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000400db7 in enqueue(int, pqueue) at queue.cu:156
+Starting program: /home/zxy/workspace/queue/queue 10 10 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 3594)]
+[Context Create of context 0x626f00 on Device 0]
+[Launch of CUDA Kernel 0 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+
+Program received signal CUDA_EXCEPTION_4, Warp Illegal Instruction.
+[Switching focus to CUDA kernel 0, grid 1, block (0,0,0), thread (0,0,0), device 0, sm 1, warp 0, lane 0]
+0x000000000076bd24 in app_bfs<<<(10,1,1),(10,1,1)>>> (myqueue=0x400200200, 
+    d_dummy=0x400200000) at queue.cu:79
+79		return 0;
+A debugging session is active.
+
+	Inferior 1 [process 3588] will be killed.
+
+Quit anyway? (y or n) [Termination of CUDA Kernel 0 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+Breakpoint 1 at 0x400e64: file queue.cu, line 156.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000400e64 in enqueue(int, pqueue) at queue.cu:156
+Starting program: /home/zxy/workspace/queue/queue 10 10 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 3688)]
+[Context Create of context 0x626f00 on Device 0]
+[Launch of CUDA Kernel 0 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 3688) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 0 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000716dc0 queue.cu:156
+The program is not being run.
+Breakpoint 1 at 0x400e64: file queue.cu, line 156.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000400e64 in enqueue(int, pqueue) at queue.cu:156
+151				//printf("%dIn:tail==queue_tail\n",threadIdx.x);
+152				if(next == NULL){
+153					//printf("%dnext==NULL\n", threadIdx.x);
+154					if(next == myAtomicCAS(&myqueue->tail->next, next, newnode)){
+155						//printf("Block:%d Thread:%d in:%d\n", blockIdx.x, threadIdx.x, newnode->data);//TEST
+156						count = 1;
+157						break;
+158					}
+159				}
+160				else{ 
+Starting program: /home/zxy/workspace/queue/queue 10 10 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 3801)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 0 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 3801) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 0 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+"info" must be followed by the name of an info command.
+List of info subcommands:
+
+info address -- Describe where symbol SYM is stored
+info all-registers -- List of all registers and their contents
+info args -- Argument variables of current stack frame
+info autosteps -- Status of autosteps
+info auxv -- Display the inferior's auxiliary vector
+info bookmarks -- Status of user-settable bookmarks
+info breakpoints -- Status of user-settable breakpoints
+info catch -- Exceptions that can be caught in the current stack frame
+info checkpoints -- IDs of currently known checkpoints
+info classes -- All Objective-C classes
+info common -- Print out the values contained in a Fortran COMMON block
+info copying -- Conditions for redistributing copies of GDB
+info cuda -- Print informations about the current CUDA activities
+info dcache -- Print information on the dcache performance
+info display -- Expressions to display when program stops
+info extensions -- All filename extensions associated with a source language
+info files -- Names of targets and files being debugged
+info float -- Print the status of the floating point unit
+info frame -- All about selected stack frame
+info functions -- All function names
+info handle -- What debugger does when program gets various signals
+info inferiors -- IDs of currently known inferiors
+info line -- Core addresses of the code for a source line
+info locals -- Local variables of current stack frame
+info macro -- Show the definition of MACRO
+info mem -- Memory region attributes
+info os -- Show OS data ARG
+Quit
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x00000000007162b0 queue.cu:156
+Note: breakpoint 2 also set at pc 0x400e5d.
+Breakpoint 2 at 0x400e5d: file queue.cu, line 133. (2 locations)
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x00000000007162b0 queue.cu:156
+2       breakpoint     keep y   <MULTIPLE>         
+2.1                         y     0x0000000000400e5d in enqueue(int, pqueue)
+                                               at queue.cu:133
+2.2                         y     0x0000000000400e5d in enqueue(int, pqueue)
+                                               at queue.cu:133
+128		myqueue->head = myqueue->head = mynode;
+129	}
+130	*/
+131	
+132	//__device__ void enqueue(pnode newnode,pqueue myqueue){
+133	__device__ void enqueue(int newdata,pqueue myqueue){
+134		int count = 0;
+135		pnode tail = NULL,next = NULL;
+136		pnode newnode = (pnode)malloc(sizeof(node));
+137	/*
+Starting program: /home/zxy/workspace/queue/queue 10 10 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 3809)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 1 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 3809) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 1 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+The program is not being run.
+Starting program: /home/zxy/workspace/queue/queue 10 10 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 3814)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 2 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 3814) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 2 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 10 10 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 3819)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 3 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 3819) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 3 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+Breakpoint 3 at 0x400c33: file queue.cu, line 40.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000716290 queue.cu:156
+2       breakpoint     keep y   <MULTIPLE>         
+2.1                         y     0x0000000000715e18 queue.cu:133
+2.2                         y     0x0000000000400e5d in enqueue(int, pqueue)
+                                               at queue.cu:133
+3       breakpoint     keep y   0x0000000000400c33 in main(int, char**)
+                                               at queue.cu:40
+Starting program: /home/zxy/workspace/queue/queue 10 10 
+[Thread debugging using libthread_db enabled]
+
+Breakpoint 3, main (argc=3, argv=0x7fffffffeab8) at queue.cu:40
+40		if(argc != 3){
+Continuing.
+[New Thread 0x7ffff5b87700 (LWP 3825)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 4 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 3825) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 4 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+31	
+32	int main(int argc, char * argv[]){
+33		int num_block, num_thread_perblock;
+34		
+35		//init and copy
+36		pnode h_dummy;
+37		pnode d_dummy;
+38		pqueue d_myqueue;
+39	
+40		if(argc != 3){
+Function "app_bfs(" not defined.
+78		printf("[Info]Complete!\n");
+79		return 0;
+80	}
+81	
+82	
+83	__global__ void app_bfs(pqueue myqueue){
+84		//printf("%d:%d\n", threadIdx.x, d_dummy->data);
+85		if((blockIdx.x == 0) && ( threadIdx.x == 0)){
+86			pnode d_dummy = (pnode)malloc(sizeof(node));
+87			d_dummy->data = -1;
+Breakpoint 4 at 0x400f12: file queue.cu, line 83.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x00000000007162b0 queue.cu:156
+2       breakpoint     keep y   <MULTIPLE>         
+2.1                         y     0x0000000000715e38 queue.cu:133
+2.2                         y     0x0000000000400e5d in enqueue(int, pqueue)
+                                               at queue.cu:133
+3       breakpoint     keep y   0x0000000000400c33 in main(int, char**)
+                                               at queue.cu:40
+	breakpoint already hit 1 time
+4       breakpoint     keep y   0x0000000000400f12 in app_bfs(pqueue)
+                                               at queue.cu:83
+78		printf("[Info]Complete!\n");
+79		return 0;
+80	}
+81	
+82	
+83	__global__ void app_bfs(pqueue myqueue){
+84		//printf("%d:%d\n", threadIdx.x, d_dummy->data);
+85		if((blockIdx.x == 0) && ( threadIdx.x == 0)){
+86			pnode d_dummy = (pnode)malloc(sizeof(node));
+87			d_dummy->data = -1;
+Starting program: /home/zxy/workspace/queue/queue 10 10 
+[Thread debugging using libthread_db enabled]
+
+Breakpoint 3, main (argc=3, argv=0x7fffffffeab8) at queue.cu:40
+40		if(argc != 3){
+Continuing.
+[New Thread 0x7ffff5b87700 (LWP 3830)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 5 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 3830) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 5 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x00000000007162b0 queue.cu:156
+2       breakpoint     keep y   <MULTIPLE>         
+2.1                         y     0x0000000000715e38 queue.cu:133
+2.2                         y     0x0000000000400e5d in enqueue(int, pqueue)
+                                               at queue.cu:133
+3       breakpoint     keep y   0x0000000000400c33 in main(int, char**)
+                                               at queue.cu:40
+	breakpoint already hit 1 time
+4       breakpoint     keep y   0x00000000007151b0 queue.cu:83
+Starting program: /home/zxy/workspace/queue/queue 10 10 
+[Thread debugging using libthread_db enabled]
+
+Breakpoint 3, main (argc=3, argv=0x7fffffffeab8) at queue.cu:40
+40		if(argc != 3){
+44		num_block = atoi(argv[1]);
+45		num_thread_perblock = atoi(argv[2]);
+47		h_dummy = (pnode)malloc(sizeof(node));
+48		h_dummy->data = -1;
+49		h_dummy->next = NULL;
+51		cudaMalloc((void **)&d_dummy, sizeof(node));
+[New Thread 0x7ffff5b87700 (LWP 3835)]
+[Context Create of context 0x625f00 on Device 0]
+52		cudaMalloc((void **)&d_myqueue, sizeof(queue));
+[Launch of CUDA Kernel 6 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+0x00007ffff78ae023 in select () from /lib/x86_64-linux-gnu/libc.so.6
+Single stepping until exit from function select,
+which has no line number information.
+0x00007ffff7baf4cf in cudaLaunch ()
+   from /usr/local/cuda-5.0/lib64/libcudart.so.5.0
+Single stepping until exit from function cudaLaunch,
+which has no line number information.
+cudaLaunch<char> (
+    func=0x400f06 "UH\211\345H\203\354\020H\211}\370H\213E\370H\211\307\350\243\377\377\377\311\303UH\211\345H\203\354\060H\211}\370H\213E\370H\211\005\261a ")
+    at cuda_runtime.h:1073
+1073	}
+[Thread 0x7ffff5b87700 (LWP 3835) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 6 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+Breakpoint 1 at 0x400e64: file queue.cu, line 156.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000400e64 in enqueue(int, pqueue) at queue.cu:156
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 3966)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 3966) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 3971)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 1 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 3971) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 1 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 3976)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 2 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 3976) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 2 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 3981)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 3 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 3981) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 3 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 3986)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 4 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 3986) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 4 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 3991)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 5 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 3991) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 5 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 3996)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 6 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 3996) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 6 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 4001)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 7 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 4001) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 7 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 4006)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 8 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 4006) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 8 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 4011)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 9 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 4011) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 9 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 4016)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 10 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 4016) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 10 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 4021)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 11 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 4021) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 11 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 4026)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 12 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 4026) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 12 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 4031)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 13 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 4031) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 13 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 4036)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 14 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 4036) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 14 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 4041)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 15 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 4041) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 15 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 4046)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 16 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 4046) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 16 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 4051)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 17 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 4051) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 17 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 4056)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 18 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 4056) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 18 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Breakpoint 1 at 0x400e64: file queue.cu, line 156.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000400e64 in enqueue(int, pqueue) at queue.cu:156
+31	
+32	int main(int argc, char * argv[]){
+33		int num_block, num_thread_perblock;
+34		
+35		//init and copy
+36		pnode h_dummy;
+37		pnode d_dummy;
+38		pqueue d_myqueue;
+39	
+40		if(argc != 3){
+41			printf("Usage: queue block_num thread_num\n");
+42			exit(1);
+43		}
+44		num_block = atoi(argv[1]);
+45		num_thread_perblock = atoi(argv[2]);
+46	
+47		h_dummy = (pnode)malloc(sizeof(node));
+48		h_dummy->data = -1;
+49		h_dummy->next = NULL;
+50	
+51		cudaMalloc((void **)&d_dummy, sizeof(node));
+52		cudaMalloc((void **)&d_myqueue, sizeof(queue));
+53		cudaMemcpy(d_dummy, h_dummy, sizeof(node), cudaMemcpyHostToDevice);
+54	
+55		cudaEvent_t start, stop;
+56		float elapsedTime;
+57		cudaEventCreate(&start);
+58		cudaEventCreate(&stop);
+59		cudaEventRecord(start, 0);
+60	
+61		app_bfs<<<num_block,num_thread_perblock>>>(d_myqueue);
+62	
+63		cudaEventRecord(stop, 0);
+64		cudaEventSynchronize(stop);
+65		cudaEventElapsedTime(&elapsedTime, start, stop);
+66	
+67		printf("[Info]Block:%d\tThread:%d\tElapsedTime:%fms\n", num_block, num_thread_perblock, elapsedTime); 
+68	
+69		cudaEventDestroy(start);
+70		cudaEventDestroy(stop);
+Breakpoint 2 at 0x400d68: file queue.cu, line 63.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000400e64 in enqueue(int, pqueue)
+                                               at queue.cu:156
+2       breakpoint     keep y   0x0000000000400d68 in main(int, char**)
+                                               at queue.cu:63
+58		cudaEventCreate(&stop);
+59		cudaEventRecord(start, 0);
+60	
+61		app_bfs<<<num_block,num_thread_perblock>>>(d_myqueue);
+62	
+63		cudaEventRecord(stop, 0);
+64		cudaEventSynchronize(stop);
+65		cudaEventElapsedTime(&elapsedTime, start, stop);
+66	
+67		printf("[Info]Block:%d\tThread:%d\tElapsedTime:%fms\n", num_block, num_thread_perblock, elapsedTime); 
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 4067)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+
+Breakpoint 2, main (argc=3, argv=0x7fffffffeab8) at queue.cu:63
+63		cudaEventRecord(stop, 0);
+There is no member named data.
+A debugging session is active.
+
+	Inferior 1 [process 4061] will be killed.
+
+Quit anyway? (y or n) [Termination of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Breakpoint 1 at 0x400e64: file queue.cu, line 156.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000400e64 in enqueue(int, pqueue) at queue.cu:156
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 4087)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+
+Program received signal CUDA_EXCEPTION_4, Warp Illegal Instruction.
+[Switching focus to CUDA kernel 0, grid 1, block (0,0,0), thread (0,0,0), device 0, sm 1, warp 0, lane 0]
+0x00000000007151a4 in app_bfs<<<(5,1,1),(4,1,1)>>> (myqueue=0x400200200)
+    at queue.cu:83
+83	__global__ void app_bfs(pqueue myqueue){
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x00000000007162b0 in _Z7enqueueiP5queue(int, pqueue) at queue.cu:157
+A debugging session is active.
+
+	Inferior 1 [process 4081] will be killed.
+
+Quit anyway? (y or n) [Termination of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Breakpoint 1 at 0x400e64: file queue.cu, line 156.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000400e64 in enqueue(int, pqueue) at queue.cu:156
+31	
+32	int main(int argc, char * argv[]){
+33		int num_block, num_thread_perblock;
+34		
+35		//init and copy
+36		pnode h_dummy;
+37		pnode d_dummy;
+38		pqueue d_myqueue;
+39	
+40		if(argc != 3){
+41			printf("Usage: queue block_num thread_num\n");
+42			exit(1);
+43		}
+44		num_block = atoi(argv[1]);
+45		num_thread_perblock = atoi(argv[2]);
+46	
+47		h_dummy = (pnode)malloc(sizeof(node));
+48		h_dummy->data = -1;
+49		h_dummy->next = NULL;
+50	
+51		cudaMalloc((void **)&d_dummy, sizeof(node));
+52		cudaMalloc((void **)&d_myqueue, sizeof(queue));
+53		cudaMemcpy(d_dummy, h_dummy, sizeof(node), cudaMemcpyHostToDevice);
+54	
+55		cudaEvent_t start, stop;
+56		float elapsedTime;
+57		cudaEventCreate(&start);
+58		cudaEventCreate(&stop);
+59		cudaEventRecord(start, 0);
+60	
+61		app_bfs<<<num_block,num_thread_perblock>>>(d_myqueue);
+62	
+63		cudaEventRecord(stop, 0);
+64		cudaEventSynchronize(stop);
+65		cudaEventElapsedTime(&elapsedTime, start, stop);
+66	
+67		printf("[Info]Block:%d\tThread:%d\tElapsedTime:%fms\n", num_block, num_thread_perblock, elapsedTime); 
+68	
+69		cudaEventDestroy(start);
+70		cudaEventDestroy(stop);
+71	
+72		free(h_dummy);
+73		cudaFree(d_dummy);
+74		cudaFree(d_myqueue);
+75		//cudaDeviceSynchronize();
+76		printf("[Info]%s\n",cudaGetErrorString(cudaGetLastError()));
+77	
+78		printf("[Info]Complete!\n");
+79		return 0;
+80	}
+Breakpoint 1 at 0x400e64: file queue.cu, line 156.
+Breakpoint 2 at 0x400d68: file queue.cu, line 63.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000400e64 in enqueue(int, pqueue) at queue.cu:156
+2       breakpoint     keep y   0x0000000000400d68 in main(int, char**) at queue.cu:63
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 4138)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+
+Breakpoint 2, main (argc=3, argv=0x7fffffffeab8) at queue.cu:63
+63		cudaEventRecord(stop, 0);
+58		cudaEventCreate(&stop);
+59		cudaEventRecord(start, 0);
+60	
+61		app_bfs<<<num_block,num_thread_perblock>>>(d_myqueue);
+62	
+63		cudaEventRecord(stop, 0);
+64		cudaEventSynchronize(stop);
+65		cudaEventElapsedTime(&elapsedTime, start, stop);
+66	
+67		printf("[Info]Block:%d\tThread:%d\tElapsedTime:%fms\n", num_block, num_thread_perblock, elapsedTime); 
+Cannot access memory at address 0x0
+Cannot access memory at address 0x0
+$1 = (pqueue) 0x400200200
+$2 = (pnode) 0x0
+64		cudaEventSynchronize(stop);
+65		cudaEventElapsedTime(&elapsedTime, start, stop);
+67		printf("[Info]Block:%d\tThread:%d\tElapsedTime:%fms\n", num_block, num_thread_perblock, elapsedTime); 
+69		cudaEventDestroy(start);
+70		cudaEventDestroy(stop);
+72		free(h_dummy);
+$3 = (pqueue *) 0x7fffffffe9a0
+$4 = {0x400200200, 0x719bf0}
+67		printf("[Info]Block:%d\tThread:%d\tElapsedTime:%fms\n", num_block, num_thread_perblock, elapsedTime); 
+68	
+69		cudaEventDestroy(start);
+70		cudaEventDestroy(stop);
+71	
+72		free(h_dummy);
+73		cudaFree(d_dummy);
+74		cudaFree(d_myqueue);
+75		//cudaDeviceSynchronize();
+76		printf("[Info]%s\n",cudaGetErrorString(cudaGetLastError()));
+57		cudaEventCreate(&start);
+58		cudaEventCreate(&stop);
+59		cudaEventRecord(start, 0);
+60	
+61		app_bfs<<<num_block,num_thread_perblock>>>(d_myqueue);
+62	
+63		cudaEventRecord(stop, 0);
+64		cudaEventSynchronize(stop);
+65		cudaEventElapsedTime(&elapsedTime, start, stop);
+66	
+47		h_dummy = (pnode)malloc(sizeof(node));
+48		h_dummy->data = -1;
+49		h_dummy->next = NULL;
+50	
+51		cudaMalloc((void **)&d_dummy, sizeof(node));
+52		cudaMalloc((void **)&d_myqueue, sizeof(queue));
+53		cudaMemcpy(d_dummy, h_dummy, sizeof(node), cudaMemcpyHostToDevice);
+54	
+55		cudaEvent_t start, stop;
+56		float elapsedTime;
+$5 = (pnode) 0x608170
+$6 = -1
+$7 = (node *) 0x0
+$8 = (pnode) 0x0
+$9 = (pnode) 0x0
+The program being debugged has been started already.
+Start it from the beginning? (y or n) Program not restarted.
+A debugging session is active.
+
+	Inferior 1 [process 4132] will be killed.
+
+Quit anyway? (y or n) [Termination of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Breakpoint 1 at 0x400e64: file queue.cu, line 156.
+Breakpoint 2 at 0x400f1e: file queue.cu, line 85.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000400e64 in enqueue(int, pqueue) at queue.cu:156
+2       breakpoint     keep y   0x0000000000400f1e in app_bfs(pqueue) at queue.cu:85
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 4189)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 4189) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+No breakpoints or watchpoints or autosteps.
+No default breakpoint address now.
+Breakpoint 1 at 0x400f12: file queue.cu, line 83.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000400f12 in app_bfs(pqueue)
+                                               at queue.cu:83
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 4783)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 4783) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+No breakpoints or watchpoints or autosteps.
+No breakpoints or watchpoints or autosteps.
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 2541)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+
+Program received signal CUDA_EXCEPTION_5, Warp Out-of-range Address.
+[Switching focus to CUDA kernel 0, grid 1, block (3,0,0), thread (1,0,0), device 0, sm 5, warp 0, lane 1]
+0x0000000000716078 in enqueue (newdata=<value optimized out>, 
+    myqueue=0x400200200) at queue.cu:149
+149			next = tail->next;
+The program being debugged has been started already.
+Start it from the beginning? (y or n) [Termination of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 2546)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 1 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 2546) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 1 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+31	
+32	int main(int argc, char * argv[]){
+33		int num_block, num_thread_perblock;
+34		
+35		//init and copy
+36		pnode h_dummy;
+37		pnode d_dummy;
+38		pqueue d_myqueue;
+39	
+40		if(argc != 3){
+78		printf("[Info]Complete!\n");
+79		return 0;
+80	}
+81	
+82	
+83	__global__ void app_bfs(pqueue myqueue){
+84		//printf("%d:%d\n", threadIdx.x, d_dummy->data);
+85		if((blockIdx.x == 0) && ( threadIdx.x == 0)){
+86			pnode d_dummy = (pnode)malloc(sizeof(node));
+87			d_dummy->data = -1;
+Breakpoint 1 at 0x400f12: file queue.cu, line 83.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000400f12 in app_bfs(pqueue)
+                                               at queue.cu:83
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 2551)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 2 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Switching focus to CUDA kernel 2, grid 1, block (0,0,0), thread (0,0,0), device 0, sm 1, warp 0, lane 0]
+
+Breakpoint 1, app_bfs<<<(5,1,1),(4,1,1)>>> (myqueue=0x400200200) at queue.cu:85
+85		if((blockIdx.x == 0) && ( threadIdx.x == 0)){
+86			pnode d_dummy = (pnode)malloc(sizeof(node));
+87			d_dummy->data = -1;
+88			d_dummy->next = NULL;
+89			myqueue->head = d_dummy;
+90			myqueue->tail = d_dummy;
+92		__syncthreads();
+95		pnode newnode = (pnode)malloc(sizeof(node));
+$1 = -1
+90			myqueue->tail = d_dummy;
+91		}
+92		__syncthreads();
+93	
+94		//printf("[Info:start]block%d:thread:%d\n", blockIdx.x, threadIdx.x);
+95		pnode newnode = (pnode)malloc(sizeof(node));
+96		//enqueue(blockIdx.x * blockDim.x + threadIdx.x, myqueue);
+97	
+98		//if(threadIdx.x % 2 == 0){
+99		if(1){
+128		myqueue->head = myqueue->head = mynode;
+129	}
+130	*/
+131	
+132	//__device__ void enqueue(pnode newnode,pqueue myqueue){
+133	__device__ void enqueue(int newdata,pqueue myqueue){
+134		int count = 0;
+135		pnode tail = NULL,next = NULL;
+136		pnode newnode = (pnode)malloc(sizeof(node));
+137	/*
+138	   if (newnode == NULL){// added can avoid the unspecified launch failure!!!
+139			printf("[Error]Malloc failed!\n");
+140			return ;
+141		}
+142	*/
+143		newnode->data = newdata;
+144		newnode->next = NULL;
+145		//printf("In:enqueue:%d\n", threadIdx.x);
+146		
+147		while(1){
+148			tail = myqueue->tail;
+149			next = tail->next;
+150			if(tail == myqueue->tail){
+151				//printf("%dIn:tail==queue_tail\n",threadIdx.x);
+152				if(next == NULL){
+153					//printf("%dnext==NULL\n", threadIdx.x);
+154					if(next == myAtomicCAS(&myqueue->tail->next, next, newnode)){
+155						//printf("Block:%d Thread:%d in:%d\n", blockIdx.x, threadIdx.x, newnode->data);//TEST
+156						count = 1;
+157						break;
+Breakpoint 2 at 0x7162b0: file queue.cu, line 156.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   <MULTIPLE>         
+	breakpoint already hit 1 time
+1.1                         y     0x00000000007151b0 in _Z7app_bfsP5queue(pqueue) at queue.cu:85
+1.2                         y     0x00000000007151b0 in _Z7app_bfsP5queue(pqueue) at queue.cu:85
+2       breakpoint     keep y   0x00000000007162b0 in _Z7enqueueiP5queue(int, pqueue) at queue.cu:157
+Continuing.
+
+Breakpoint 2, enqueue (newdata=<value optimized out>, myqueue=0x400200200)
+    at queue.cu:157
+157						break;
+$2 = -1
+$3 = 16
+$4 = 0
+$5 = 12
+$6 = 4
+$7 = 8
+Continuing.
+[Switching focus to CUDA kernel 2, grid 1, block (0,0,0), thread (1,0,0), device 0, sm 1, warp 0, lane 1]
+
+Breakpoint 2, enqueue (newdata=<value optimized out>, myqueue=0x400200200)
+    at queue.cu:157
+157						break;
+$8 = -1
+$9 = 16
+$10 = 0
+$11 = 12
+$12 = 4
+$13 = 8
+$14 = 1
+$15 = 5
+$16 = 9
+$17 = 13
+$18 = 17
+  2 Thread 0x7ffff5b87700 (LWP 2551)  0x00007ffff78ae023 in select ()
+   from /lib/x86_64-linux-gnu/libc.so.6
+* 1 Thread 0x7ffff7fe0740 (LWP 2547)  0x00007ffff61df019 in ?? ()
+   from /usr/lib/libcuda.so
+Unrecognized option: 'threadIdx'.
+Unrecognized option: 'threadIdx.x'.
+Unrecognized option: 'threadIdx'.
+$19 = -1
+$20 = 16
+$21 = 0
+$22 = 12
+$23 = 4
+$24 = 8
+$25 = 1
+$26 = 5
+$27 = 9
+$28 = 13
+$29 = 17
+newdata = <value optimized out>
+myqueue = 0x400200200
+newdata = <value optimized out>
+myqueue = 0x400200200
+newdata = <value optimized out>
+myqueue = 0x400200200
+$30 = -1
+$31 = 16
+$32 = 0
+$33 = 12
+$34 = 4
+$35 = 8
+$36 = 1
+$37 = 5
+$38 = 9
+$39 = 13
+$40 = 17
+Continuing.
+[Switching focus to CUDA kernel 2, grid 1, block (0,0,0), thread (2,0,0), device 0, sm 1, warp 0, lane 2]
+
+Breakpoint 2, enqueue (newdata=<value optimized out>, myqueue=0x400200200)
+    at queue.cu:157
+157						break;
+$41 = -1
+$42 = 16
+$43 = 0
+$44 = 12
+$45 = 4
+$46 = 8
+$47 = 1
+$48 = 5
+$49 = 9
+$50 = 13
+$51 = 17
+$52 = 2
+$53 = 6
+$54 = 10
+$55 = 14
+$56 = 18
+Continuing.
+[Switching focus to CUDA kernel 2, grid 1, block (0,0,0), thread (3,0,0), device 0, sm 1, warp 0, lane 3]
+
+Breakpoint 2, enqueue (newdata=<value optimized out>, myqueue=0x400200200)
+    at queue.cu:157
+157						break;
+$57 = -1
+$58 = 16
+$59 = 0
+$60 = 12
+$61 = 4
+$62 = 8
+$63 = 1
+$64 = 5
+$65 = 9
+$66 = 13
+$67 = 17
+$68 = 2
+$69 = 6
+$70 = 10
+$71 = 14
+$72 = 18
+$73 = 3
+$74 = 7
+$75 = 11
+$76 = 15
+$77 = 19
+Continuing.
+[Thread 0x7ffff5b87700 (LWP 2551) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 2 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Breakpoint 1 at 0x400e64: file queue.cu, line 156.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000400e64 in enqueue(int, pqueue) at queue.cu:156
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 2607)]
+[Context Create of context 0x625f00 on Device 0]
+[Launch of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Switching focus to CUDA kernel 0, grid 1, block (0,0,0), thread (0,0,0), device 0, sm 1, warp 0, lane 0]
+
+Breakpoint 1, enqueue (newdata=<value optimized out>, myqueue=0x400200200)
+    at queue.cu:157
+157						break;
+-1	16	4	8	0	12	
+Continuing.
+[Switching focus to CUDA kernel 0, grid 1, block (0,0,0), thread (1,0,0), device 0, sm 1, warp 0, lane 1]
+
+Breakpoint 1, enqueue (newdata=<value optimized out>, myqueue=0x400200200)
+    at queue.cu:157
+157						break;
+-1	16	4	8	0	12	5	1	9	13	17	
+Continuing.
+[Switching focus to CUDA kernel 0, grid 1, block (0,0,0), thread (2,0,0), device 0, sm 1, warp 0, lane 2]
+
+Breakpoint 1, enqueue (newdata=<value optimized out>, myqueue=0x400200200)
+    at queue.cu:157
+157						break;
+-1	16	4	8	0	12	5	1	9	13	17	2	6	10	14	18	
+Continuing.
+[Switching focus to CUDA kernel 0, grid 1, block (0,0,0), thread (3,0,0), device 0, sm 1, warp 0, lane 3]
+
+Breakpoint 1, enqueue (newdata=<value optimized out>, myqueue=0x400200200)
+    at queue.cu:157
+157						break;
+Continuing.
+[Thread 0x7ffff5b87700 (LWP 2607) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Undefined command: "quiot".  Try "help".
+Breakpoint 1 at 0x400e64: file queue.cu, line 156.
+Breakpoint 2 at 0x400e85: file queue.cu, line 184.
+Breakpoint 3 at 0x400e85: file queue.cu, line 194.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000400e64 in enqueue(int, pqueue) at queue.cu:156
+2       breakpoint     keep y   0x0000000000400e85 in dequeue(pnode, pqueue) at queue.cu:184
+3       breakpoint     keep y   0x0000000000400e85 in dequeue(pnode, pqueue) at queue.cu:194
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 2680)]
+[Context Create of context 0x626f00 on Device 0]
+[Launch of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 2680) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 2685)]
+[Context Create of context 0x626f00 on Device 0]
+[Launch of CUDA Kernel 1 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 2685) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 1 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 2690)]
+[Context Create of context 0x626f00 on Device 0]
+[Launch of CUDA Kernel 2 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 2690) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 2 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Breakpoint 1 at 0x400e64: file queue.cu, line 156.
+Breakpoint 2 at 0x400e85: file queue.cu, line 184.
+Breakpoint 3 at 0x400e85: file queue.cu, line 194.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000400e64 in enqueue(int, pqueue) at queue.cu:156
+2       breakpoint     keep y   0x0000000000400e85 in dequeue(pnode, pqueue) at queue.cu:184
+3       breakpoint     keep y   0x0000000000400e85 in dequeue(pnode, pqueue) at queue.cu:194
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 3281)]
+[Context Create of context 0x626f00 on Device 0]
+[Launch of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 3281) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Breakpoint 1 at 0x400e64: file queue.cu, line 156.
+Breakpoint 2 at 0x400e85: file queue.cu, line 184.
+Breakpoint 3 at 0x400e85: file queue.cu, line 194.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000400e64 in enqueue(int, pqueue) at queue.cu:156
+2       breakpoint     keep y   0x0000000000400e85 in dequeue(pnode, pqueue) at queue.cu:184
+3       breakpoint     keep y   0x0000000000400e85 in dequeue(pnode, pqueue) at queue.cu:194
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 2411)]
+[Context Create of context 0x626f00 on Device 0]
+[Launch of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 2411) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 2416)]
+[Context Create of context 0x626f00 on Device 0]
+[Launch of CUDA Kernel 1 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 2416) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 1 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 2421)]
+[Context Create of context 0x626f00 on Device 0]
+[Launch of CUDA Kernel 2 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 2421) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 2 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 2426)]
+[Context Create of context 0x626f00 on Device 0]
+[Launch of CUDA Kernel 3 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 2426) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 3 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 2431)]
+[Context Create of context 0x626f00 on Device 0]
+[Launch of CUDA Kernel 4 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 2431) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 4 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 10 10
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 2436)]
+[Context Create of context 0x626f00 on Device 0]
+[Launch of CUDA Kernel 5 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 2436) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 5 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 10 10
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 2441)]
+[Context Create of context 0x626f00 on Device 0]
+[Launch of CUDA Kernel 6 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 2441) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 6 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 10 10
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 2446)]
+[Context Create of context 0x626f00 on Device 0]
+[Launch of CUDA Kernel 7 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 2446) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 7 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 10 10
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 2451)]
+[Context Create of context 0x626f00 on Device 0]
+[Launch of CUDA Kernel 8 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 2451) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 8 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 10 20
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 2456)]
+[Context Create of context 0x626f00 on Device 0]
+[Launch of CUDA Kernel 9 (app_bfs<<<(10,1,1),(20,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 2456) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 9 (app_bfs<<<(10,1,1),(20,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 10 20
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b87700 (LWP 2461)]
+[Context Create of context 0x626f00 on Device 0]
+[Launch of CUDA Kernel 10 (app_bfs<<<(10,1,1),(20,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b87700 (LWP 2461) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 10 (app_bfs<<<(10,1,1),(20,1,1)>>>) on Device 0]
+Breakpoint 1 at 0x400e64: file queue.cu, line 156.
+Breakpoint 2 at 0x400e85: file queue.cu, line 184.
+Breakpoint 3 at 0x400e85: file queue.cu, line 194.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000400e64 in enqueue(int, pqueue) at queue.cu:156
+2       breakpoint     keep y   0x0000000000400e85 in dequeue(pnode, pqueue) at queue.cu:184
+3       breakpoint     keep y   0x0000000000400e85 in dequeue(pnode, pqueue) at queue.cu:194
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b0b700 (LWP 3459)]
+[Context Create of context 0x654230 on Device 0]
+[Launch of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b0b700 (LWP 3459) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 10 10
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b0b700 (LWP 3464)]
+[Context Create of context 0x654230 on Device 0]
+[Launch of CUDA Kernel 1 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b0b700 (LWP 3464) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 1 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 10 10
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b0b700 (LWP 3469)]
+[Context Create of context 0x654230 on Device 0]
+[Launch of CUDA Kernel 2 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b0b700 (LWP 3469) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 2 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+Breakpoint 1 at 0x400c1d: file queue.cu, line 156.
+Breakpoint 2 at 0x400c3e: file queue.cu, line 184.
+Breakpoint 3 at 0x400c3e: file queue.cu, line 194.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000400c1d in enqueue(int, pqueue) at queue.cu:156
+2       breakpoint     keep y   0x0000000000400c3e in dequeue(pnode, pqueue) at queue.cu:184
+3       breakpoint     keep y   0x0000000000400c3e in dequeue(pnode, pqueue) at queue.cu:194
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b0b700 (LWP 3550)]
+[Context Create of context 0x653230 on Device 0]
+[Launch of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b0b700 (LWP 3550) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b0b700 (LWP 3555)]
+[Context Create of context 0x653230 on Device 0]
+[Launch of CUDA Kernel 1 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b0b700 (LWP 3555) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 1 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b0b700 (LWP 3560)]
+[Context Create of context 0x653230 on Device 0]
+[Launch of CUDA Kernel 2 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b0b700 (LWP 3560) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 2 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b0b700 (LWP 3565)]
+[Context Create of context 0x653230 on Device 0]
+[Launch of CUDA Kernel 3 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b0b700 (LWP 3565) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 3 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b0b700 (LWP 3570)]
+[Context Create of context 0x653230 on Device 0]
+[Launch of CUDA Kernel 4 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b0b700 (LWP 3570) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 4 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff5b0b700 (LWP 3575)]
+[Context Create of context 0x653230 on Device 0]
+[Launch of CUDA Kernel 5 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b0b700 (LWP 3575) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 5 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Breakpoint 1 at 0x400a9d: file queue.cu, line 44.
+Breakpoint 2 at 0x400c1d: file queue.cu, line 156.
+Breakpoint 3 at 0x400c3e: file queue.cu, line 184.
+Breakpoint 4 at 0x400c3e: file queue.cu, line 194.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000400a9d in main(int, char**) at queue.cu:44
+2       breakpoint     keep y   0x0000000000400c1d in enqueue(int, pqueue) at queue.cu:156
+3       breakpoint     keep y   0x0000000000400c3e in dequeue(pnode, pqueue) at queue.cu:184
+4       breakpoint     keep y   0x0000000000400c3e in dequeue(pnode, pqueue) at queue.cu:194
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+
+Breakpoint 1, main (argc=3, argv=0x7fffffffeab8) at queue.cu:44
+44		num_block = atoi(argv[1]);
+39	
+40		if(argc != 3){
+41			printf("Usage: queue block_num thread_num\n");
+42			exit(1);
+43		}
+44		num_block = atoi(argv[1]);
+45		num_thread_perblock = atoi(argv[2]);
+46	
+47		h_dummy = (pnode)malloc(sizeof(node));
+48		h_dummy->data = -1;
+A debugging session is active.
+
+	Inferior 1 [process 3608] will be killed.
+
+Quit anyway? (y or n) Breakpoint 1 at 0x400a9d: file queue.cu, line 44.
+Breakpoint 2 at 0x400c1d: file queue.cu, line 156.
+Breakpoint 3 at 0x400c3e: file queue.cu, line 184.
+Breakpoint 4 at 0x400c3e: file queue.cu, line 194.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000400a9d in main(int, char**) at queue.cu:44
+2       breakpoint     keep y   0x0000000000400c1d in enqueue(int, pqueue) at queue.cu:156
+3       breakpoint     keep y   0x0000000000400c3e in dequeue(pnode, pqueue) at queue.cu:184
+4       breakpoint     keep y   0x0000000000400c3e in dequeue(pnode, pqueue) at queue.cu:194
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+
+Breakpoint 1, main (argc=3, argv=0x7fffffffeab8) at queue.cu:44
+44		num_block = atoi(argv[1]);
+The program being debugged has been started already.
+Start it from the beginning? (y or n) Program not restarted.
+Continuing.
+[New Thread 0x7ffff5b0b700 (LWP 3916)]
+[Context Create of context 0x653230 on Device 0]
+[Launch of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff5b0b700 (LWP 3916) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Breakpoint 1 at 0x402798: file queue.cu, line 156.
+Breakpoint 2 at 0x4027b9: file queue.cu, line 184.
+Breakpoint 3 at 0x4027b9: file queue.cu, line 194.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000402798 in enqueue(int, pqueue) at queue.cu:156
+2       breakpoint     keep y   0x00000000004027b9 in dequeue(pnode, pqueue) at queue.cu:184
+3       breakpoint     keep y   0x00000000004027b9 in dequeue(pnode, pqueue) at queue.cu:194
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff627d700 (LWP 3071)]
+[Context Create of context 0x682a30 on Device 0]
+[Launch of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff627d700 (LWP 3071) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Breakpoint 1 at 0x402798: file queue.cu, line 156.
+Breakpoint 2 at 0x4027b9: file queue.cu, line 184.
+Breakpoint 3 at 0x4027b9: file queue.cu, line 194.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000402798 in enqueue(int, pqueue) at queue.cu:156
+2       breakpoint     keep y   0x00000000004027b9 in dequeue(pnode, pqueue) at queue.cu:184
+3       breakpoint     keep y   0x00000000004027b9 in dequeue(pnode, pqueue) at queue.cu:194
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff627d700 (LWP 3161)]
+[Context Create of context 0x682a30 on Device 0]
+[Launch of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff627d700 (LWP 3161) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Breakpoint 1 at 0x402798: file queue.cu, line 156.
+Breakpoint 2 at 0x4027b9: file queue.cu, line 184.
+Breakpoint 3 at 0x4027b9: file queue.cu, line 194.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000402798 in enqueue(int, pqueue) at queue.cu:156
+2       breakpoint     keep y   0x00000000004027b9 in dequeue(pnode, pqueue) at queue.cu:184
+3       breakpoint     keep y   0x00000000004027b9 in dequeue(pnode, pqueue) at queue.cu:194
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+fatal:  All CUDA devices are used for display and cannot be used while debugging. (error code = 24)
+A debugging session is active.
+
+	Inferior 1 [process 3817] will be killed.
+
+Quit anyway? (y or n) Breakpoint 1 at 0x402798: file queue.cu, line 156.
+Breakpoint 2 at 0x4027b9: file queue.cu, line 184.
+Breakpoint 3 at 0x4027b9: file queue.cu, line 194.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000402798 in enqueue(int, pqueue) at queue.cu:156
+2       breakpoint     keep y   0x00000000004027b9 in dequeue(pnode, pqueue) at queue.cu:184
+3       breakpoint     keep y   0x00000000004027b9 in dequeue(pnode, pqueue) at queue.cu:194
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff627d700 (LWP 3865)]
+[Context Create of context 0x682a30 on Device 0]
+[Launch of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff627d700 (LWP 3865) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Breakpoint 1 at 0x402798: file queue.cu, line 156.
+Breakpoint 2 at 0x4027b9: file queue.cu, line 184.
+Breakpoint 3 at 0x4027b9: file queue.cu, line 194.
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000402798 in enqueue(int, pqueue) at queue.cu:156
+2       breakpoint     keep y   0x00000000004027b9 in dequeue(pnode, pqueue) at queue.cu:184
+3       breakpoint     keep y   0x00000000004027b9 in dequeue(pnode, pqueue) at queue.cu:194
+Starting program: /home/zxy/workspace/queue/queue 5 4 
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff627d700 (LWP 4103)]
+[Context Create of context 0x682a30 on Device 0]
+[Launch of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+[Thread 0x7ffff627d700 (LWP 4103) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 0 (app_bfs<<<(5,1,1),(4,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 10 20
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff627d700 (LWP 4110)]
+[Context Create of context 0x682a30 on Device 0]
+[Launch of CUDA Kernel 1 (app_bfs<<<(10,1,1),(20,1,1)>>>) on Device 0]
+[Thread 0x7ffff627d700 (LWP 4110) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 1 (app_bfs<<<(10,1,1),(20,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 10 20
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff627d700 (LWP 4117)]
+[Context Create of context 0x682a30 on Device 0]
+[Launch of CUDA Kernel 2 (app_bfs<<<(10,1,1),(20,1,1)>>>) on Device 0]
+[Thread 0x7ffff627d700 (LWP 4117) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 2 (app_bfs<<<(10,1,1),(20,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 10 20
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff627d700 (LWP 4124)]
+[Context Create of context 0x682a30 on Device 0]
+[Launch of CUDA Kernel 3 (app_bfs<<<(10,1,1),(20,1,1)>>>) on Device 0]
+[Thread 0x7ffff627d700 (LWP 4124) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 3 (app_bfs<<<(10,1,1),(20,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 10 10
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff627d700 (LWP 4131)]
+[Context Create of context 0x682a30 on Device 0]
+[Launch of CUDA Kernel 4 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+[Thread 0x7ffff627d700 (LWP 4131) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 4 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 10 10
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff627d700 (LWP 4138)]
+[Context Create of context 0x682a30 on Device 0]
+[Launch of CUDA Kernel 5 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+[Thread 0x7ffff627d700 (LWP 4138) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 5 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 10 10
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff627d700 (LWP 4145)]
+[Context Create of context 0x682a30 on Device 0]
+[Launch of CUDA Kernel 6 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+[Thread 0x7ffff627d700 (LWP 4145) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 6 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 10 10
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff627d700 (LWP 4152)]
+[Context Create of context 0x682a30 on Device 0]
+[Launch of CUDA Kernel 7 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+[Thread 0x7ffff627d700 (LWP 4152) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 7 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 10 10
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff627d700 (LWP 4159)]
+[Context Create of context 0x682a30 on Device 0]
+[Launch of CUDA Kernel 8 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+[Thread 0x7ffff627d700 (LWP 4159) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 8 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 10 10
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff627d700 (LWP 4166)]
+[Context Create of context 0x682a30 on Device 0]
+[Launch of CUDA Kernel 9 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+[Thread 0x7ffff627d700 (LWP 4166) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 9 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 10 10
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff627d700 (LWP 4173)]
+[Context Create of context 0x682a30 on Device 0]
+[Launch of CUDA Kernel 10 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+[Thread 0x7ffff627d700 (LWP 4173) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 10 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+Starting program: /home/zxy/workspace/queue/queue 10 10
+[Thread debugging using libthread_db enabled]
+[New Thread 0x7ffff627d700 (LWP 4180)]
+[Context Create of context 0x682a30 on Device 0]
+[Launch of CUDA Kernel 11 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
+[Thread 0x7ffff627d700 (LWP 4180) exited]
+
+Program exited normally.
+[Termination of CUDA Kernel 11 (app_bfs<<<(10,1,1),(10,1,1)>>>) on Device 0]
