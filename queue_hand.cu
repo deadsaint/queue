@@ -21,13 +21,13 @@ typedef struct queue{
 
 //__host__ void init(pqueue myqueue);
 
-__device__ void enqueue(int mydata,pqueue myqueue);
+__device__ void enqueue(int mydata,pqueue myqueue, pnode mem_to_allocate);
 __device__ int dequeue(pnode mynode, pqueue myqueue);
 __device__ pnode myAtomicCAS(pnode * address, pnode compare, pnode val);
 __device__ void deleteNode(pnode delnode);
 
 //__global__ void app_bfs(pqueue myqueue, pnode d_dummy); // TODO add bfs to test queue.
-__global__ void app_bfs(pqueue myqueue); // TODO add bfs to test queue.
+__global__ void app_bfs(pqueue myqueue, pnode mem_to_allocate); // TODO add bfs to test queue.
 __global__ void init(pqueue myqueue);
 __global__ void show(pqueue myqueue);
 
@@ -39,6 +39,7 @@ int main(int argc, char * argv[]){
 	pnode h_dummy;
 	pnode d_dummy;
 	pqueue d_myqueue;
+	pnode mem_to_allocate;
 
 	if(argc != 3){
 		printf("Usage: queue block_num thread_num\n");
@@ -51,9 +52,9 @@ int main(int argc, char * argv[]){
 	h_dummy->data = -1;
 	h_dummy->next = NULL;
 
-	cudaDeviceReset();
 	cudaMalloc((void **)&d_dummy, sizeof(node));
 	cudaMalloc((void **)&d_myqueue, sizeof(queue));
+	cudaMalloc((void **)&mem_to_allocate, sizeof(node) * num_block * num_thread_perblock);
 	cudaMemcpy(d_dummy, h_dummy, sizeof(node), cudaMemcpyHostToDevice);
 
 	cudaEvent_t start, stop;
@@ -63,7 +64,7 @@ int main(int argc, char * argv[]){
  	cudaEventRecord(start, 0);
 
 	init<<<1,1>>>(d_myqueue);
-	app_bfs<<<num_block,num_thread_perblock>>>(d_myqueue);
+	app_bfs<<<num_block,num_thread_perblock>>>(d_myqueue, mem_to_allocate);
 	show<<<1,1>>>(d_myqueue);
 
 	cudaEventRecord(stop, 0);
@@ -104,7 +105,7 @@ __global__ void show(pqueue myqueue){
 	
 }
 
-__global__ void app_bfs(pqueue myqueue){
+__global__ void app_bfs(pqueue myqueue, pnode mem_to_allocate){
 	//printf("%d:%d\n", threadIdx.x, d_dummy->data);
 /*
 	if((blockIdx.x == 0) && ( threadIdx.x == 0)){
@@ -123,7 +124,7 @@ __global__ void app_bfs(pqueue myqueue){
 	if(blockIdx.x % 2 == 1){
 	//if(1){
 		//printf("block:%d\tthread:%d\n", blockIdx.x, threadIdx.x);
-		enqueue(blockIdx.x * blockDim.x + threadIdx.x, myqueue);
+		enqueue(blockIdx.x * blockDim.x + threadIdx.x, myqueue, mem_to_allocate);
 	}
 	else{
 		//printf("block:%d\tthread:%d\n", blockIdx.x, threadIdx.x);
@@ -166,9 +167,11 @@ __host__ void init(pqueue myqueue){
 */
 
 //__device__ void enqueue(pnode newnode,pqueue myqueue){
-__device__ void enqueue(int newdata,pqueue myqueue){
+__device__ void enqueue(int newdata, pqueue myqueue, pnode mem_to_allocate){
+	int count = 0;
 	pnode tail = NULL,next = NULL;
-	pnode newnode = (pnode)malloc(sizeof(node));
+	//pnode newnode = (pnode)malloc(sizeof(node));
+	pnode newnode = mem_to_allocate + blockIdx.x * blockDim.x + threadIdx.x;
 /*
    if (newnode == NULL){// added can avoid the unspecified launch failure!!!
 		printf("[Error]Malloc failed!\n");
@@ -198,7 +201,7 @@ __device__ void enqueue(int newdata,pqueue myqueue){
 		}
 	}
 	myAtomicCAS(&myqueue->tail, tail, newnode); // success or not both ok
-
+	
 	//printf("Out:enqueue\n");
 }
 
