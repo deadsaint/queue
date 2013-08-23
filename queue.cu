@@ -1,15 +1,9 @@
-//head always point to the flag one
-//tail always point to last or last second one
-//init:head = tail = flag one 
-//malloc and free in enqueue && dequeue
 #include <stdio.h>
-#include <stdlib.h>
-#include <cuda_runtime.h>
-
-using namespace std;
+#include "cuda_runtime.h"
+#include "device_launch_parameters.h"
 
 typedef struct node{
-	//TODO any data type
+	//TODO template for any data type
 	int data;
 	struct node * next;
 }node, * pnode;
@@ -19,72 +13,68 @@ typedef struct queue{
 	pnode tail;
 }queue, *pqueue;
 
-//__host__ void init(pqueue myqueue);
 
-__device__ void enqueue(int mydata,pqueue myqueue);
+__device__ int enqueue(int mydata,pqueue myqueue);
 __device__ int dequeue(pnode mynode, pqueue myqueue);
 __device__ pnode myAtomicCAS(pnode * address, pnode compare, pnode val);
 __device__ void deleteNode(pnode delnode);
 
-//__global__ void app_bfs(pqueue myqueue, pnode d_dummy); // TODO add bfs to test queue.
-__global__ void app_bfs(pqueue myqueue); // TODO add bfs to test queue.
+__global__ void app_bfs(pqueue myqueue);
 __global__ void init(pqueue myqueue);
 __global__ void show(pqueue myqueue);
 
 
+int isError(cudaError_t cudaStatus, char* error_info);
+
 int main(int argc, char * argv[]){
-	int num_block, num_thread_perblock;
-	
-	//init and copy
-	pnode h_dummy;
-	pnode d_dummy;
+	int num_block, thread_per_block;
 	pqueue d_myqueue;
 
-	if(argc != 3){
+	cudaError_t cudaStatus;
+	
+	if(argc != 3){// with this if we cant go into cuda debug
 		printf("Usage: queue block_num thread_num\n");
-		exit(1);
+		return -1;
 	}
 	num_block = atoi(argv[1]);
-	num_thread_perblock = atoi(argv[2]);
+	thread_per_block = atoi(argv[2]);
 
-	h_dummy = (pnode)malloc(sizeof(node));
-	h_dummy->data = -1;
-	h_dummy->next = NULL;
+	cudaStatus = cudaDeviceReset();
+	if (isError(cudaStatus, "cudaDeviceReset error."))
+		return -1;
 
-	cudaDeviceReset();
-	cudaMalloc((void **)&d_dummy, sizeof(node));
-	cudaMalloc((void **)&d_myqueue, sizeof(queue));
-	cudaMemcpy(d_dummy, h_dummy, sizeof(node), cudaMemcpyHostToDevice);
+	cudaStatus = cudaMalloc((void **)&d_myqueue, sizeof(queue));
 
 	cudaEvent_t start, stop;
  	float elapsedTime;
- 	cudaEventCreate(&start);
- 	cudaEventCreate(&stop);
- 	cudaEventRecord(start, 0);
+ 	cudaStatus = cudaEventCreate(&start);
+ 	cudaStatus = cudaEventCreate(&stop);
+ 	cudaStatus = cudaEventRecord(start, 0);
 
 	init<<<1,1>>>(d_myqueue);
-	app_bfs<<<num_block,num_thread_perblock>>>(d_myqueue);
-	show<<<1,1>>>(d_myqueue);
+	cudaStatus = cudaDeviceSynchronize();
+	app_bfs<<<num_block,thread_per_block>>>(d_myqueue);
+	cudaStatus = cudaDeviceSynchronize();
+	printf("[Info]%s\n",cudaGetErrorString(cudaGetLastError()));
+	//show<<<1,1>>>(d_myqueue);
+	//cudaStatus = cudaDeviceSynchronize();
 
-	cudaEventRecord(stop, 0);
-	cudaEventSynchronize(stop);
-	cudaEventElapsedTime(&elapsedTime, start, stop);
+	cudaStatus = cudaEventRecord(stop, 0);
+	cudaStatus = cudaEventSynchronize(stop);
+	cudaStatus = cudaEventElapsedTime(&elapsedTime, start, stop);
 
-	printf("[Info]Block:%d\tThread:%d\tElapsedTime:%fms\n", num_block, num_thread_perblock, elapsedTime); 
+	printf("[Info]Block:%d\tThread:%d\tElapsedTime:%fms\n", num_block, thread_per_block, elapsedTime); 
 
 	cudaEventDestroy(start);
 	cudaEventDestroy(stop);
 
-	free(h_dummy);
-	cudaFree(d_dummy);
 	cudaFree(d_myqueue);
 	//cudaDeviceSynchronize();
-	printf("[Info]%s\n",cudaGetErrorString(cudaGetLastError()));
+	//printf("[Info]%s\n",cudaGetErrorString(cudaGetLastError()));
 
 	printf("[Info]Complete!\n");
 	return 0;
 }
-
 
 __global__ void init(pqueue myqueue){
 	pnode d_dummy = (pnode)malloc(sizeof(node));
@@ -93,6 +83,18 @@ __global__ void init(pqueue myqueue){
 	myqueue->head = d_dummy;
 	myqueue->tail = d_dummy;
 }
+
+int isError(cudaError_t cudaStatus, char* error_info)
+{
+	if (cudaStatus != cudaSuccess){
+		printf("[Error]%s\n", error_info);
+		return 1;
+	}
+	else
+		return 0;
+}
+
+
 
 __global__ void show(pqueue myqueue){
    pnode temp = myqueue->head;
@@ -104,102 +106,58 @@ __global__ void show(pqueue myqueue){
 	
 }
 
-__global__ void app_bfs(pqueue myqueue){
-	//printf("%d:%d\n", threadIdx.x, d_dummy->data);
-/*
-	if((blockIdx.x == 0) && ( threadIdx.x == 0)){
-		pnode d_dummy = (pnode)malloc(sizeof(node));
-		d_dummy->data = -1;
-		d_dummy->next = NULL;
-		myqueue->head = d_dummy;
-		myqueue->tail = d_dummy;
-	}
-	__syncthreads();
-*/
-	//printf("[Info:start]block%d:thread:%d\n", blockIdx.x, threadIdx.x);
-	pnode newnode = (pnode)malloc(sizeof(node));
-	//enqueue(blockIdx.x * blockDim.x + threadIdx.x, myqueue);
 
-	if(blockIdx.x % 2 == 1){
+__global__ void app_bfs(pqueue myqueue){
+
+	pnode newnode = (pnode)malloc(sizeof(node));
+	if(threadIdx.x % 2 == 1){
 	//if(1){
 		//printf("block:%d\tthread:%d\n", blockIdx.x, threadIdx.x);
 		enqueue(blockIdx.x * blockDim.x + threadIdx.x, myqueue);
 	}
 	else{
-		//printf("block:%d\tthread:%d\n", blockIdx.x, threadIdx.x);
 		dequeue(newnode, myqueue);
-		
-//		if (!dequeue(newnode, myqueue))
-//			printf("Block:%d Thread:%d out:%d\n", blockIdx.x, threadIdx.x, newnode->data);
-//		else
-//			printf("Block:%d Thread:%d out:NULL\n", blockIdx.x, threadIdx.x);
-	    
 	}
-
-/*
-	__syncthreads();
-	if((blockIdx.x == 0) && ( threadIdx.x == 0)){
-    	pnode temp = myqueue->head;
-    	while(temp != NULL){
-    		printf("%d\t",temp->data);
-    		temp = temp->next;
-    	}
-		printf("\n");
-	}
-*/
-	//printf("[Info:end]block%d:thread:%d\n", blockIdx.x, threadIdx.x);
 }
 
 __device__ pnode myAtomicCAS(pnode * address, pnode compare, pnode val){
-	return (pnode)atomicCAS((unsigned long long int*)address,
-			(unsigned long long int)compare,
-			(unsigned long long int)val);
+	//compare just the address, not the value.
+	//sizeof(data *) = 8 int x64 and 4 in win32
+	return (pnode)atomicCAS((unsigned long long int*)address, (unsigned long long int)compare, (unsigned long long int)val);
 }
-/*
-//TODO in host
-__host__ void init(pqueue myqueue){
-	pnode mynode = new node();
-	mynode->data = 0;
-	mynode->next = NULL;
-	myqueue->head = myqueue->head = mynode;
-}
-*/
 
-//__device__ void enqueue(pnode newnode,pqueue myqueue){
-__device__ void enqueue(int newdata,pqueue myqueue){
+
+__device__ int enqueue(int newdata,pqueue myqueue){
 	pnode tail = NULL,next = NULL;
 	pnode newnode = (pnode)malloc(sizeof(node));
-/*
-   if (newnode == NULL){// added can avoid the unspecified launch failure!!!
+	int flag = sizeof(node);
+	flag = sizeof(pnode);
+	/*
+	if (newnode == NULL){// added can avoid the unspecified launch failure!!!
 		printf("[Error]Malloc failed!\n");
 		return ;
 	}
-*/
+	*/
 	newnode->data = newdata;
 	newnode->next = NULL;
-	//printf("In:enqueue:%d\n", threadIdx.x);
 	
 	while(1){
 		tail = myqueue->tail;
 		next = tail->next;
 		if(tail == myqueue->tail){
-			//printf("%dIn:tail==queue_tail\n",threadIdx.x);
 			if(next == NULL){
-				//printf("%dnext==NULL\n", threadIdx.x);
 				if(next == myAtomicCAS(&myqueue->tail->next, next, newnode)){
-					//printf("Block:%d Thread:%d in:%d\n", blockIdx.x, threadIdx.x, newnode->data);
+					flag = 1;
 					break;
 				}
 			}
 			else{ 
-				//printf("%dnext != NULL\n",threadIdx.x);
 				myAtomicCAS(&myqueue->tail, tail, next);// success or not both ok
 			}
 		}
 	}
 	myAtomicCAS(&myqueue->tail, tail, newnode); // success or not both ok
-
-	//printf("Out:enqueue\n");
+	return flag;
 }
 
 __device__ int dequeue(pnode mynode, pqueue myqueue){
@@ -225,15 +183,13 @@ __device__ int dequeue(pnode mynode, pqueue myqueue){
 				//printf("In:head!=tail\n");
 				mynode->data = next->data;
 				if(head == myAtomicCAS(&myqueue->head, head, next)){
-					//printf("out:%d\n",mynode->data);
-					//printf("Block:%d Thread:%d out:%d\n", blockIdx.x, threadIdx.x, mynode->data);
 					break;
 				}
 			}
 		}
 	}
 
-	//TODO first we dont delete node
+	//TODO first we don't delete node
 	//deleteNode(head);
 
 	return 0;
